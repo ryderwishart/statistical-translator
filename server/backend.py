@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import uvicorn
@@ -6,6 +7,15 @@ from combined_glosser import CombinedGlosser  # Import our glosser
 import random
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5174"],  # Add your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TranslationRequest(BaseModel):
     source_sentences: List[str]
